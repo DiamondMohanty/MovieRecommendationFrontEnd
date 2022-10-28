@@ -1,4 +1,5 @@
 from project.server import db
+from datetime import datetime
 
 class UserReponses(db.Model):
     __tablename__ = 'user_responses'
@@ -7,6 +8,7 @@ class UserReponses(db.Model):
     k_means_model = db.Column(db.String(255), nullable = False)    
     bert_model = db.Column(db.String(255), nullable = False)
     original = db.Column(db.String(255), nullable = False)
+    as_of = db.Column(db.DateTime(timezone=True), default=datetime.now())
 
     def get_id(self):
         return self.id
@@ -17,7 +19,8 @@ class UserReponses(db.Model):
                 'lda': self.lda_model,
                 'kmeans': self.k_means_model,                
                 'bert': self.bert_model,                
-                'original': self.original
+                'original': self.original,
+                'as_of': str(self.as_of)
             }
     
     def save(self):

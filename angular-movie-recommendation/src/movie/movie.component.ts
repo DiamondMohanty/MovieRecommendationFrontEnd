@@ -66,13 +66,22 @@ export class MovieComponent {
     };
 
     this.movieService.saveUserSelection(body).subscribe(data => {
+      let modalRef;
       if ('response_id' in data) {
-        let modelRef = this.ngbModal.open(NgbdModalConfirm);
-        modelRef.componentInstance.mode = 1;
+        modalRef = this.ngbModal.open(NgbdModalConfirm);
+        modalRef.componentInstance.mode = 1;
       } else {
-        let modelRef = this.ngbModal.open(NgbdModalConfirm);
-        modelRef.componentInstance.mode = 2;
+        let modalRef = this.ngbModal.open(NgbdModalConfirm);
+        modalRef.componentInstance.mode = 2;
         console.log(data['error']);
+      }
+      if (modalRef != undefined && (modalRef.componentInstance.mode == 1 || modalRef.componentInstance.mode == 2)) {
+        modalRef.componentInstance.mode = 1;
+        modalRef.result.then((data) => {
+          location.reload();
+        },
+        (error) => {
+        });
       }
     });
 
