@@ -1,33 +1,31 @@
 from project.server import db
-from flask import Blueprint, jsonify
-
-user_response_model = Blueprint('user_response_model', __name__)
 
 class UserReponses(db.Model):
     __tablename__ = 'user_responses'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_email = db.Column(db.String(255), nullable = False)
     lda_model = db.Column(db.String(255), nullable = False)
-    k_means_model = db.Column(db.String(255), nullable = False)
-    cosine_model = db.Column(db.String(255), nullable = True)
-    bert_model = db.Column(db.String(255), nullable = True)
-    default_model = db.Column(db.String(255), nullable = True)
+    k_means_model = db.Column(db.String(255), nullable = False)    
+    bert_model = db.Column(db.String(255), nullable = False)
+    original = db.Column(db.String(255), nullable = False)
 
     def get_id(self):
         return self.id
         
     def to_dict(self):
         return {
-                'id': self.id,
-                'user': self.user_email,
+                'id': self.id,                
                 'lda': self.lda_model,
-                'k-means': self.k_means_model,
-                'cosine': self.cosine_model,
-                'bert': self.bert_model,
-                'default': self.default_model
+                'kmeans': self.k_means_model,                
+                'bert': self.bert_model,                
+                'original': self.original
             }
-        
+    
+    def save(self):
+        self.id = len(UserReponses.query.all()) + 1
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return self.id
+        except Exception as e:
+            return str(e)
 
-@user_response_model.route('/api/user-response', methods=['POST'])
-def save_user_response():
-    pass

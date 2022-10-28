@@ -37,11 +37,6 @@ class TestingConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     """Production configuration."""
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}'.format(
-    username="Devmob",
-    password="Lotus@2018",
-    hostname="Devmob.mysql.pythonanywhere-services.com",
-    databasename="Devmob$MovieRecommendationDEV",
-    )
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:MovieRecommendation123@harshita23-2887.postgres.pythonanywhere-services.com:12887/movies'
     DEBUG_TB_ENABLED = False
     

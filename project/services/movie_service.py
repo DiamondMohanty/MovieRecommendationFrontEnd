@@ -16,11 +16,10 @@ def get_all_movies() -> List[Movies]:
 def get_recommendation_for(in_movie: str) -> List[Movies]:
     kmeans_preds = k_means_model.predict(in_movie)
     lda_preds = lda_model.predict(in_movie)
-    bert_preds = bert_model.predict(in_movie)
-    return [
-        {
+    bert_preds = bert_model.predict(in_movie, K_TOP_MOVIES)
+    return {
             'kmeans': [movie.to_dict() for movie in kmeans_preds][len(kmeans_preds) - K_TOP_MOVIES:],
             'lda': [movie.to_dict() for movie in lda_preds][len(lda_preds) - K_TOP_MOVIES:],
-            'bert': [movie.to_dict() for movie in bert_preds][len(bert_preds) - K_TOP_MOVIES:]
+            'bert': [movie.to_dict() for movie in bert_preds]
         }
-    ]
+    

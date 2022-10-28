@@ -1,0 +1,32 @@
+<div class="flex-container">
+    <div *ngFor="let movie of movies; let idx = index">
+        <movie-thumbnail 
+        [movie]="movie" 
+        [mode] = "0"
+        class="movie-container"
+        (select)="recommendMovies($event)">
+        </movie-thumbnail>
+    </div>
+
+    <div class="clearfix"></div>
+    <div *ngFor="let movie of currentRecommendations; let idx = index">
+        <movie-thumbnail [movie]="movie" 
+        class="movie-container">
+        </movie-thumbnail>
+    </div>
+</div>
+<div class="text-center" *ngIf="currentRecommendations.length > 0 && currentStep <= 1">
+    <button class="btn btn-success"  
+    (click)="changeRecommendations()">
+        Next
+    </button>
+    <p class="text-primary top-20" >Click on the checkbox to mark the movies you think are similar to <strong class="text-info"> {{originalMovie.name}} </strong>. If none of the movies 
+        are similar then just click on next.
+    </p>
+</div>
+<div class="text-center" *ngIf="currentRecommendations.length > 0 && currentStep == steps.length - 1">
+    <button class="btn btn-success" (click) = 'saveSelections()' >
+        Submit
+    </button>
+    <p class="text-primary top-20">Submit to save your selections</p>
+</div>

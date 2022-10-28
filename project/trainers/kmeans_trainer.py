@@ -22,7 +22,8 @@ class KMeansTrainer():
             may_be_movies = list(filter(lambda ele: ele['kmeans_pred'] == cluster and ele['original_title'] != movie_name, self.__model))
             imdb_ids = []
             for m in may_be_movies:
-                imdb_ids.append(m['imdb_id'])
+                if m['imdb_id'] != found_movie['imdb_id']:
+                    imdb_ids.append(m['imdb_id'])
             initial_recommendation = db.session.query(Movies).filter(Movies.imdb_id.in_(imdb_ids)).all()
             db_movie = Movies.query.filter_by(name = movie_name).first()
             final_movies = []

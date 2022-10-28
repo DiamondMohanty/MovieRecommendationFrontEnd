@@ -1,0 +1,18 @@
+.movie-container {
+    flex: 1;
+    margin: 10px auto;
+    width: 80%;    
+}
+
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.clear {
+    clear: both;
+}
+
+.top-20 {
+    margin-top: 20px;
+}

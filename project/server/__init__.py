@@ -2,11 +2,9 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 # instantiate the extensions
 db = SQLAlchemy()
-migrate = Migrate()
 
 from project.controllers import controllers
 
@@ -24,6 +22,5 @@ def create_app():
 
     # set up extensions
     db.init_app(app)
-    migrate.init_app(app, db)
     return app
 

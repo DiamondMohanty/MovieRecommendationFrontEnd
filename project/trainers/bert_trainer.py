@@ -14,9 +14,8 @@ class BertTrainer():
             self.__bert_data = pickle.load(fd)
 
     
-    def predict(self, in_movie: str) -> List[Movies]:
+    def predict(self, in_movie: str, k: int) -> List[Movies]:
         in_movie_idx = None
-        
         for idx, movie in enumerate(self.__bert_data):
             if movie['original_title'] == in_movie:
                 in_movie_idx = idx
@@ -34,9 +33,8 @@ class BertTrainer():
 
         sorted_idx = np.argsort(similarities[0])
         imdb_ids = []
-        for idx in sorted_idx:
-            imdb_ids.append(self.__bert_data[idx]['imdb_id'])
-
-        
+        for idx in sorted_idx[::-1][:k]:
+            if in_movie != self.__bert_data[idx]['original_title']:
+                imdb_ids.append(self.__bert_data[idx]['imdb_id'])  
 
         return db.session.query(Movies).filter(Movies.imdb_id.in_(imdb_ids)).all()
